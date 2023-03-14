@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:11:59 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/14 11:14:18 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/14 12:39:16 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PHILO_H
 
 # include <pthread.h>
-# include "libft.h"
+# include <stdio.h>
 
 typedef struct s_data {
 	int	number_of_philosophers;
