@@ -6,11 +6,18 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/15 14:19:47 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:12:52 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "philo.h"
+
+/*
+	The ft_atoi() function receives a char array, 
+	parses through all spaces and tabs in the begining,
+	checks if there is a signal ("+" or "-"), 
+	and then converts the number on the String to an integer and returns it.
+*/
 
 int	ft_atoi(const char *str)
 {

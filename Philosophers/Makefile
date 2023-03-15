@@ -1,15 +1,12 @@
 NAME = philo.a
 
-CC = cc
-
-CFLAGS = -I $(DIRINC) -Wall -Wextra -Werror
-
-LIBC = ar rc
-RM = rm -f
-
-DIRINC = ./includes/philo.h
+DIRINC = ./includes/
 
 DIRSRC = ./srcs/
+
+CC = cc
+
+CFLAGS = -I $(DIRINC) -Wall -Wextra -Werror -pthread
 
 SRC =   main \
 		utils \
