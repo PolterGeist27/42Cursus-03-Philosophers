@@ -6,11 +6,11 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 10:39:38 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/15 12:36:23 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/15 14:17:46 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 int	main(int argc, char **argv)
 {

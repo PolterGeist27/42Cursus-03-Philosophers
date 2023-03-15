@@ -6,11 +6,11 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/15 12:24:02 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/15 14:19:47 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 int	ft_atoi(const char *str)
 {

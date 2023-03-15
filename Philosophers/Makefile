@@ -1,29 +1,33 @@
+NAME = philo.a
 
+CC = cc
 
-DIRINC = ./includes/
+CFLAGS = -I $(DIRINC) -Wall -Wextra -Werror
+
+LIBC = ar rc
+RM = rm -f
+
+DIRINC = ./includes/philo.h
 
 DIRSRC = ./srcs/
 
 SRC =   main \
 		utils \
+		init \
 
 SRCS = $(addprefix ${DIRSRC}, $(addsuffix .c, ${SRC}))
 
-CFLAGS = -Wall -Wextra -Werror -I $(DIRINC)
-CC = cc
-LIBC = ar rc
-RM = rm -f
+OBJS = $(SRCS:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(CFLAGS) $(SRCS) -o philo
+$(NAME): $(OBJS)
+	$(CC) -o philo $(OBJS)
 
 clean:
-	make clean -C $(DIRLIB)
+	rm -f $(OBJS)
 
 fclean: clean
-	make fclean -C $(DIRLIB)
 	rm -f philo
 
 re: fclean all
