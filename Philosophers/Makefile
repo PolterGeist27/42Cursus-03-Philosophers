@@ -1,4 +1,4 @@
-NAME = philo.a
+NAME = philo
 
 DIRINC = ./includes/
 
