@@ -11,6 +11,7 @@ CFLAGS = -I $(DIRINC) -Wall -Wextra -Werror -pthread
 SRC =   main \
 		utils \
 		init \
+		actions \
 
 SRCS = $(addprefix ${DIRSRC}, $(addsuffix .c, ${SRC}))
 
