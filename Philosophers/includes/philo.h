@@ -20,6 +20,11 @@
 # include <sys/time.h>
 # include <string.h>
 
+typedef struct s_fork {
+    int             id;
+    pthread_mutex_t lock;
+} t_fork;
+
 typedef struct s_data {
 	int	nbr_philosophers;
 	int nbr_forks;

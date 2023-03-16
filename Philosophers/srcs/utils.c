@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 /*
 	The ft_atoi() function receives a char array, 
-	parses through all spaces and tabs in the begining,
+	parses through all spaces and tabs in the beginning,
 	checks if there is a signal ("+" or "-"), 
 	and then converts the number on the String to an integer and returns it.
 */
