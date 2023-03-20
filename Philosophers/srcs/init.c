@@ -6,15 +6,15 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/15 15:03:10 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/20 12:51:20 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 /*
-	Checks if all the values from the input are valid
-	(for example we can't have a negative number of philosophers)
+ * Checks if all the values from the input are valid
+ * (for example we can't have a negative number of philosophers)
 */
 
 int	check_inputs(t_data *data, int argc)
@@ -33,8 +33,28 @@ int	check_inputs(t_data *data, int argc)
 }
 
 /*
-	Initializes all the variables in "data" to the given values
-	and sends them to check_inputs() for validation
+ * Creates an array of mutex variables, each representing a fork,
+ * that is identified by its index.
+*/
+
+pthread_mutex_t	*init_forks(int nbr_philosophers)
+{
+	pthread_mutex_t *forks;
+	int i;
+
+	i = 0;
+	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * nbr_philosophers);
+	while (i < nbr_philosophers)
+	{
+		pthread_mutex_init(&forks[i], NULL);
+		i++;
+	}
+	return (forks);
+}
+
+/*
+ * Initializes all the variables in "data" to the given values
+ * and sends them to check_inputs() for validation
 */
 
 int	init(int argc, char **argv, t_data *data)
@@ -50,5 +70,6 @@ int	init(int argc, char **argv, t_data *data)
 		data->nbr_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
 	else
 		data->nbr_of_times_each_philosopher_must_eat = 0;
+	data->forks = init_forks(data->nbr_forks);
 	return (check_inputs(data, argc));
 }

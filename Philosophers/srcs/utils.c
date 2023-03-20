@@ -6,17 +6,17 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/15 15:12:52 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:03:13 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 /*
-	The ft_atoi() function receives a char array, 
-	parses through all spaces and tabs in the beginning,
-	checks if there is a signal ("+" or "-"), 
-	and then converts the number on the String to an integer and returns it.
+ * The ft_atoi() function receives a char array,
+ * parses through all spaces and tabs in the beginning,
+ * checks if the number is negative, then converts the number
+ * to an integer and returns it.
 */
 
 int	ft_atoi(const char *str)
@@ -46,4 +46,19 @@ int	ft_atoi(const char *str)
 	if (j % 2 == 1)
 		final *= -1;
 	return (final);
+}
+
+/*
+ * This function get the current time and returns it,
+ * in milliseconds.
+ */
+
+long long	get_time(void)
+{
+	struct timeval tv;
+	long long time_ms;
+
+	gettimeofday(&tv, NULL);
+	time_ms = tv.tv_usec * 1000;
+	return  (time_ms);
 }
