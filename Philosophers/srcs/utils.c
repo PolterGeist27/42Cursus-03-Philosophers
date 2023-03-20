@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/20 13:03:13 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:31:46 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,12 @@ int	ft_atoi(const char *str)
 }
 
 /*
- * This function get the current time and returns it,
+ * This function get the current time and returns it
  * in milliseconds.
+ *
+ * Note: gettimeofday() returns a struct timeval with
+ * the total time being timeval.tv_sec + timeval.tv_usec,
+ * NOT the same time in two different measurements
  */
 
 long long	get_time(void)
@@ -59,6 +63,6 @@ long long	get_time(void)
 	long long time_ms;
 
 	gettimeofday(&tv, NULL);
-	time_ms = tv.tv_usec * 1000;
+	time_ms = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return  (time_ms);
 }
