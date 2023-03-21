@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/20 15:27:49 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:38:14 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ t_philo	*init_philos(t_data **data)
 
 	i = 0;
 	philos = malloc(sizeof(t_philo) * (*data)->nbr_philos);
+	if (!philos)
+		return  (NULL);
 	while (i <= (*data)->nbr_philos)
 	{
 		philos[i].ID = i + 1;
@@ -82,7 +84,7 @@ pthread_mutex_t *init_forks(int nbr_philosophers)
 
 /*
  * Initializes all the variables in "data" to the given values
- * and sends them to check_inputs() for validation
+ * and sends them to check_inputs() for validation.
 */
 
 int	init(int argc, char **argv, t_data *data)
@@ -96,7 +98,7 @@ int	init(int argc, char **argv, t_data *data)
 	if (argc == 6)
 		data->must_eat = ft_atoi(argv[5]);
 	else
-		data->must_eat = 0;
+		data->must_eat = -1;
 	data->forks = init_forks(data->nbr_philos);
 	data->philos = init_philos(&data);
 	if (!data->forks || !data->philos)
