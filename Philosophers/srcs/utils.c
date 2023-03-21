@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/20 15:31:46 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:34:40 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,19 @@ long long	get_time(void)
 	gettimeofday(&tv, NULL);
 	time_ms = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return  (time_ms);
+}
+
+/*
+ * This function receives a philosopher and a message to print
+ * and prints the message in the format "<time in ms> <philo ID> <message>"
+ *
+ * An example of a message is "215 5 has taken a fork."
+ */
+
+void	print_message(t_philo philo, char *msg)
+{
+	long long	time;
+
+	time = get_time();
+	printf("%lld %d %s", time, philo.ID, msg);
 }

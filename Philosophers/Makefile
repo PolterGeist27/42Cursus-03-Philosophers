@@ -12,6 +12,7 @@ SRC =   main \
 		utils \
 		init \
 		actions \
+		simulation \
 
 SRCS = $(addprefix ${DIRSRC}, $(addsuffix .c, ${SRC}))
 
