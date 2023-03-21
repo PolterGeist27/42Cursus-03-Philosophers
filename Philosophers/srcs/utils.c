@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/21 11:34:40 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:14:13 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ void	print_message(t_philo philo, char *msg)
 	long long	time;
 
 	time = get_time();
-	printf("%lld %d %s", time, philo.ID, msg);
+	printf("%lld %d %s\n", time, philo.ID, msg);
 }

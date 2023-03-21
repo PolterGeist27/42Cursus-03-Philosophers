@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:11:59 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/21 11:47:07 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:13:20 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_philo {
 	int	ID;
 	int	nbr_of_meals;
 	long long	last_meal_time;
-	pthread_t	*thread;
+	pthread_t	thread;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	t_data	*data;
