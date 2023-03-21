@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/21 11:38:14 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:19:23 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_philo	*init_philos(t_data **data)
 	int i;
 
 	i = 0;
-	philos = malloc(sizeof(t_philo) * (*data)->nbr_philos);
+	philos = (t_philo *)malloc(sizeof(t_philo) * (*data)->nbr_philos); // Error might have something to do with this
 	if (!philos)
 		return  (NULL);
 	while (i <= (*data)->nbr_philos)
