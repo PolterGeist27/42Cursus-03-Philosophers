@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42porto.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/21 18:13:41 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:19:38 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	init_simulation(t_data *data)
 	i = 0;
 	while (i < data->nbr_philos)
 	{
-		printf("i: %d\n", i);
 		pthread_create(&data->philos[i].thread, NULL, &routine, &data->philos[i]);
 		usleep(1000);
 		i++;
@@ -27,7 +26,7 @@ int	init_simulation(t_data *data)
 	i = 0;
 	while (i < data->nbr_philos)
 	{
-		pthread_detach(data->philos[i].thread);
+		//pthread_detach(data->philos[i].thread);
 		usleep(1000);
 		i++;
 	}
