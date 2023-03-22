@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:11:59 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/21 18:13:20 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:52:14 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_data {
 	long long	init_time;
 	struct s_philo *philos;
 	pthread_mutex_t *forks;
+	pthread_mutex_t print;
 } t_data;
 
 typedef struct s_philo {
@@ -47,6 +48,9 @@ typedef struct s_philo {
 int	ft_atoi(const char *str);
 long long	get_time(void);
 void	print_message(t_philo philo, char *msg);
+int check_meals(t_data *data);
+int check_deaths(t_data *data);
+void	*reaper(void *arg);
 
 //	actions.c
 void	take_forks(t_philo *philo);
@@ -59,6 +63,9 @@ int	init(int argc, char **argv, t_data *data);
 int check_inputs(t_data *data, int argc);
 pthread_mutex_t	*init_forks(int nbr_philosophers);
 t_philo	*init_philos(t_data **data);
-int	init_simulation(t_data *data);
+
+//	simulation.c
+int		init_simulation(t_data *data);
+void	end_simulation(pthread_t th_reaper, t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/21 18:23:51 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:10:06 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,21 @@ t_philo	*init_philos(t_data **data)
 	int i;
 
 	i = 0;
-	philos = (t_philo *)malloc(sizeof(t_philo) * (*data)->nbr_philos); // Error might have something to do with this
+	philos = (t_philo *)malloc(sizeof(t_philo) * (*data)->nbr_philos);
 	if (!philos)
 		return  (NULL);
 	while (i < (*data)->nbr_philos)
 	{
 		philos[i].ID = i + 1;
 		philos[i].nbr_of_meals = 0;
-		philos[i].last_meal_time = 0; // ????
-		printf("==============\n");
+		philos[i].last_meal_time = get_time() + (*data)->init_time;
+/*		printf("==============\n");
 		printf("philo: %d\n", philos[i].ID);
-		printf("left: %d\n", (i + 1) % (*data)->nbr_philos);
-		printf("right: %d\n", i);
-		printf("==============\n");
-		philos[i].left_fork = &(*data)->forks[(i + 1) % (*data)->nbr_philos];
-		philos[i].right_fork = &(*data)->forks[i];
+		printf("right: %d\n", (i + 1) % (*data)->nbr_philos);
+		printf("left: %d\n", i);
+		printf("==============\n");*/
+		philos[i].right_fork = &(*data)->forks[(i + 1) % (*data)->nbr_philos];
+		philos[i].left_fork = &(*data)->forks[i];
 		philos[i].data = *data;
 		i++;
 	}

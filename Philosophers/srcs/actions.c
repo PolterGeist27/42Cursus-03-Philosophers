@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/21 18:18:17 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:37:21 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 
 void	take_forks(t_philo *philo)
 {
-	pthread_mutex_lock(philo->right_fork);
-	print_message(*philo, "has taken a fork.");
 	pthread_mutex_lock(philo->left_fork);
+	print_message(*philo, "has taken a fork.");
+	pthread_mutex_lock(philo->right_fork);
 	print_message(*philo, "has taken a fork.");
 }
 
@@ -38,8 +38,8 @@ void ft_eat(t_philo *philo)
 	print_message(*philo, "is eating.");
 	philo->last_meal_time = get_time();
 	usleep(philo->data->time_to_eat * 1000); // time is in ms
-	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
 	philo->nbr_of_meals++;
 }
 
@@ -63,10 +63,36 @@ void	*routine(void *arg)
 	{
 		take_forks(philo);
 		ft_eat(philo);
+		if (philo->nbr_of_meals == philo->data->must_eat)
+			break;
 		ft_sleep(philo);
 		print_message(*philo, "is thinking.");
-		if (philo->nbr_of_meals > 3)
-			break;
 	}
 	return ((void *)philo);
+}
+
+void	*reaper(void *arg)
+{
+	t_data *data;
+	long long	current_time;
+	int count;
+	int i;
+
+	data = (t_data *)arg;
+	while(1)
+	{
+		i = 0;
+		count = 0;
+		while (i < data->nbr_philos)
+		{
+			current_time = get_time();
+			if (data->must_eat != -1 && data->philos[i].nbr_of_meals >= data->must_eat)
+				count++;
+			if ((current_time - data->philos[i].last_meal_time) > data->time_to_die)
+				return (&data->philos[i]);
+			i++;
+		}
+		if (count == data->nbr_philos)
+			return (NULL);
+	}
 }

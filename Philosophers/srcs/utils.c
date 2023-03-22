@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/21 18:14:13 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:32:17 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,45 @@ void	print_message(t_philo philo, char *msg)
 {
 	long long	time;
 
-	time = get_time();
+	pthread_mutex_lock(&philo.data->print);
+	time = get_time() - philo.data->init_time;
 	printf("%lld %d %s\n", time, philo.ID, msg);
+	pthread_mutex_unlock(&philo.data->print);
+}
+
+/*
+ * This function checks if every philo has reached the
+ * minimum meal goal set by the user.
+ */
+
+int	check_meals(t_data *data)
+{
+	int nbr_of_meals;
+	int	i;
+
+	i = 0;
+	nbr_of_meals = data->must_eat;
+	while (i < data->nbr_philos)
+	{
+		if (data->philos[i].nbr_of_meals < nbr_of_meals)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int check_deaths(t_data *data)
+{
+	long long	current_time;
+	int i;
+
+	i = 0;
+	current_time = get_time();
+	while (i < data->nbr_philos)
+	{
+		if ((current_time - data->philos[i].last_meal_time) > data->time_to_die)
+			return (1);
+		i++;
+	}
+	return (0);
 }
