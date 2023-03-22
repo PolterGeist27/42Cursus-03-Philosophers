@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/22 14:37:21 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:26:03 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ void ft_sleep(t_philo *philo)
 	usleep(philo->data->time_to_sleep * 1000); // time is in ms
 }
 
+/*
+ * This function is the routine for the philosophers,
+ * they start by eating, when they finish they sleep
+ * and after they wake up they start thinking until
+ * they can eat again;
+ */
+
 void	*routine(void *arg)
 {
 	t_philo *philo;
@@ -70,6 +77,13 @@ void	*routine(void *arg)
 	}
 	return ((void *)philo);
 }
+
+/*
+ * The point of this function is to run on a separate
+ * thread to monitor all the philosophers.
+ * It checks if any philosopher has died or if they all
+ * achieved the number of meals required to end the simulation.
+ */
 
 void	*reaper(void *arg)
 {
