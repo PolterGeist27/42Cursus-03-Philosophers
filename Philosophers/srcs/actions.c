@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/22 16:26:03 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:03:59 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	*routine(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
-	while (1)
+	while (!check_deaths(philo->data))
 	{
 		take_forks(philo);
 		ft_eat(philo);
