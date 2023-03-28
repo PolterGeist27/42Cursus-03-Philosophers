@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/23 14:03:59 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:39:58 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@
 void	take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
+	if (check_deaths(philo->data))
+		return ;
 	print_message(*philo, "has taken a fork.");
 	pthread_mutex_lock(philo->right_fork);
+	if (check_deaths(philo->data))
+		return ;
 	print_message(*philo, "has taken a fork.");
 }
 
@@ -66,14 +70,30 @@ void	*routine(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
+	if (philo->data->nbr_philos == 1)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_message(*philo, "has taken a fork.");
+		return ((void *)philo);
+	}
 	while (!check_deaths(philo->data))
 	{
+		if (check_deaths(philo->data))
+			break;
 		take_forks(philo);
+		if (check_deaths(philo->data))
+			break;
 		ft_eat(philo);
 		if (philo->nbr_of_meals == philo->data->must_eat)
 			break;
+		if (check_deaths(philo->data))
+			break;
 		ft_sleep(philo);
+		if (check_deaths(philo->data))
+			break;
 		print_message(*philo, "is thinking.");
+		if (check_deaths(philo->data))
+			break;
 	}
 	return ((void *)philo);
 }
