@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/28 12:05:30 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:40:23 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,15 @@ int	init(int argc, char **argv, t_data *data)
 		data->must_eat = -1;
 	data->forks = init_forks(data->nbr_philos);
 	data->philos = init_philos(&data);
-	if (!data->forks || !data->philos)
+	if (!data->forks)
+	{
+		free(data->forks);
 		return (1);
+	}
+	if (!data->philos)
+	{
+		free(data->philos);
+		return (1);
+	}
 	return (check_inputs(data, argc));
 }
