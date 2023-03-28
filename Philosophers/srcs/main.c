@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 10:39:38 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/21 18:07:37 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:56:13 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_data(t_data *data)
 
 int	main(int argc, char **argv)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = malloc(sizeof(t_data));
 	if (!data || init(argc, argv, data))

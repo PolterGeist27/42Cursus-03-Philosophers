@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/28 10:23:05 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:05:30 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ int	check_inputs(t_data *data, int argc)
 
 t_philo	*init_philos(t_data **data)
 {
-	t_philo *philos;
-	int i;
+	t_philo	*philos;
+	int		i;
 
 	i = 0;
 	philos = (t_philo *)malloc(sizeof(t_philo) * (*data)->nbr_philos);
 	if (!philos)
-		return  (NULL);
+		return (NULL);
 	while (i < (*data)->nbr_philos)
 	{
-		philos[i].ID = i + 1;
+		philos[i].id = i + 1;
 		philos[i].nbr_of_meals = 0;
 		philos[i].last_meal_time = get_time();
 		philos[i].right_fork = &(*data)->forks[(i + 1) % (*data)->nbr_philos];
@@ -65,13 +65,14 @@ t_philo	*init_philos(t_data **data)
  * that is identified by its index.
 */
 
-pthread_mutex_t *init_forks(int nbr_philosophers)
+pthread_mutex_t	*init_forks(int nbr_philosophers)
 {
-	pthread_mutex_t *forks;
-	int i;
+	pthread_mutex_t	*forks;
+	int				i;
 
 	i = 0;
-	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * nbr_philosophers);
+	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* nbr_philosophers);
 	if (!forks)
 		return (NULL);
 	while (i < nbr_philosophers)

@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/28 10:21:50 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:01:39 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ int	ft_atoi(const char *str)
 
 long long	get_time(void)
 {
-	struct timeval tv;
-	long long time_ms;
+	struct timeval	tv;
+	long long		time_ms;
 
 	gettimeofday(&tv, NULL);
 	time_ms = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-	return  (time_ms);
+	return (time_ms);
 }
 
 /*
@@ -80,7 +80,7 @@ void	print_message(t_philo philo, char *msg)
 
 	pthread_mutex_lock(&philo.data->print);
 	time = get_time() - philo.data->init_time;
-	printf("%lld %d %s\n", time, philo.ID, msg);
+	printf("%lld %d %s\n", time, philo.id, msg);
 	pthread_mutex_unlock(&philo.data->print);
 }
 
@@ -91,7 +91,7 @@ void	print_message(t_philo philo, char *msg)
 
 int	check_meals(t_data *data)
 {
-	int nbr_of_meals;
+	int	nbr_of_meals;
 	int	i;
 
 	i = 0;
@@ -109,10 +109,10 @@ int	check_meals(t_data *data)
 * This function checks if any philo has died
 */
 
-int check_deaths(t_data *data)
+int	check_deaths(t_data *data)
 {
 	long long	current_time;
-	int i;
+	int			i;
 
 	i = 0;
 	current_time = get_time();

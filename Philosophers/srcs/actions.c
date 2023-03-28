@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/28 11:39:58 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:09:51 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	take_forks(t_philo *philo)
  * is putting the forks down on the table again.
  */
 
-void ft_eat(t_philo *philo)
+void	ft_eat(t_philo *philo)
 {
 	print_message(*philo, "is eating.");
 	philo->last_meal_time = get_time();
-	usleep(philo->data->time_to_eat * 1000); // time is in ms
+	usleep(philo->data->time_to_eat * 1000);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 	philo->nbr_of_meals++;
@@ -52,10 +52,10 @@ void ft_eat(t_philo *philo)
  * which lasts for time_to_sleep milliseconds.
  */
 
-void ft_sleep(t_philo *philo)
+void	ft_sleep(t_philo *philo)
 {
 	print_message(*philo, "is sleeping.");
-	usleep(philo->data->time_to_sleep * 1000); // time is in ms
+	usleep(philo->data->time_to_sleep * 1000);
 }
 
 /*
@@ -67,7 +67,7 @@ void ft_sleep(t_philo *philo)
 
 void	*routine(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	if (philo->data->nbr_philos == 1)
@@ -79,21 +79,17 @@ void	*routine(void *arg)
 	while (!check_deaths(philo->data))
 	{
 		if (check_deaths(philo->data))
-			break;
+			break ;
 		take_forks(philo);
 		if (check_deaths(philo->data))
-			break;
+			break ;
 		ft_eat(philo);
-		if (philo->nbr_of_meals == philo->data->must_eat)
-			break;
-		if (check_deaths(philo->data))
-			break;
+		if (check_meals(philo->data) || check_deaths(philo->data))
+			break ;
 		ft_sleep(philo);
 		if (check_deaths(philo->data))
-			break;
+			break ;
 		print_message(*philo, "is thinking.");
-		if (check_deaths(philo->data))
-			break;
 	}
 	return ((void *)philo);
 }
@@ -107,22 +103,24 @@ void	*routine(void *arg)
 
 void	*reaper(void *arg)
 {
-	t_data *data;
+	t_data		*data;
 	long long	current_time;
-	int count;
-	int i;
+	int			count;
+	int			i;
 
 	data = (t_data *)arg;
-	while(1)
+	while (1)
 	{
 		i = 0;
 		count = 0;
 		while (i < data->nbr_philos)
 		{
 			current_time = get_time();
-			if (data->must_eat != -1 && data->philos[i].nbr_of_meals >= data->must_eat)
+			if (data->must_eat != -1
+				&& data->philos[i].nbr_of_meals >= data->must_eat)
 				count++;
-			if ((current_time - data->philos[i].last_meal_time) > data->time_to_die)
+			if ((current_time - data->philos[i].last_meal_time)
+				> data->time_to_die)
 				return (&data->philos[i]);
 			i++;
 		}
