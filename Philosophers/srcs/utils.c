@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/28 12:01:39 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:36:08 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int	check_meals(t_data *data)
 
 	i = 0;
 	nbr_of_meals = data->must_eat;
+	if (nbr_of_meals < 0)
+		return (0);
 	while (i < data->nbr_philos)
 	{
 		if (data->philos[i].nbr_of_meals < nbr_of_meals)

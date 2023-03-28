@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/28 11:57:19 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:44:24 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	init_simulation(t_data *data)
 
 	i = 0;
 	pthread_mutex_init(&data->print, NULL);
+	data->init_time = get_time();
 	while (i < data->nbr_philos)
 	{
-		data->init_time = get_time();
 		data->philos[i].last_meal_time = get_time();
 		pthread_create(&data->philos[i].thread,
 			NULL, &routine, &data->philos[i]);
@@ -55,16 +55,14 @@ void	end_simulation(pthread_t th_reaper, t_data *data)
 	int		i;
 
 	pthread_join(th_reaper, &result);
-	if (!result)
-		printf("The simulation was successful!\n");
-	else
+	if (result)
 		print_message(*(t_philo *)(result), "has died.");
 	i = 0;
-	pthread_mutex_destroy(&data->print);
 	while (i < data->nbr_philos)
 	{
 		pthread_join(data->philos[i].thread, NULL);
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&data->print);
 }
