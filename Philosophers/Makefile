@@ -21,7 +21,7 @@ OBJS = $(SRCS:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -o philo $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o philo
 
 clean:
 	rm -f $(OBJS)

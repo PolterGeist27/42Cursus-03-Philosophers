@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/22 14:32:23 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/28 10:21:50 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,10 @@ int	check_meals(t_data *data)
 	}
 	return (1);
 }
+
+/*
+* This function checks if any philo has died
+*/
 
 int check_deaths(t_data *data)
 {

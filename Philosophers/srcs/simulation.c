@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogmart <diogmart@student.42porto.>       +#+  +:+       +#+        */
+/*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/22 16:33:11 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/03/28 10:24:53 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	end_simulation(pthread_t th_reaper, t_data *data)
 	pthread_mutex_destroy(&data->print);
 	while (i < data->nbr_philos)
 	{
-		pthread_detach(data->philos[i].thread);
+		pthread_join(data->philos[i].thread, NULL);
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
