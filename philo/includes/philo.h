@@ -44,6 +44,7 @@ typedef struct s_philo {
 
 //	main.c
 void			free_data(t_data *data);
+long			ft_atol(const char *str);
 
 //	utils.c
 int				ft_atoi(const char *str);
@@ -61,7 +62,7 @@ void			*routine(void *arg);
 
 //	init.c
 int				init(int argc, char **argv, t_data *data);
-int				check_inputs(t_data *data, int argc);
+int				check_inputs(char **argv, int argc);
 pthread_mutex_t	*init_forks(int nbr_philosophers);
 t_philo			*init_philos(t_data **data);
 

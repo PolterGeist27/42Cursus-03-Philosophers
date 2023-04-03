@@ -17,17 +17,25 @@
  * (for example we can't have a negative number of philosophers)
 */
 
-int	check_inputs(t_data *data, int argc)
+int	check_inputs(char **argv, int argc)
 {
-	if (data->nbr_philos <= 0)
+	long	int_max;
+
+	int_max = 2147483647;
+	if ((ft_atol(argv[1]) <= 0)
+		|| (int_max < ft_atol(argv[1])))
 		return (1);
-	if (data->time_to_die <= 0)
+	if ((ft_atol(argv[2]) <= 0)
+		|| (int_max < ft_atol(argv[2])))
 		return (1);
-	if (data->time_to_eat <= 0)
+	if ((ft_atol(argv[3]) <= 0)
+		|| (int_max < ft_atol(argv[3])))
 		return (1);
-	if (data->time_to_sleep <= 0)
+	if ((ft_atol(argv[4]) <= 0)
+		|| (int_max < ft_atol(argv[4])))
 		return (1);
-	if (argc == 6 && data->must_eat <= 0)
+	if (argc == 6 && ((ft_atol(argv[5]) <= 0)
+		|| (int_max < ft_atol(argv[5]))))
 		return (1);
 	return (0);
 }
@@ -90,7 +98,7 @@ pthread_mutex_t	*init_forks(int nbr_philosophers)
 
 int	init(int argc, char **argv, t_data *data)
 {
-	if (argc != 5 && argc != 6)
+	if ((argc != 5 && argc != 6) || check_inputs(argv, argc))
 		return (1);
 	data->nbr_philos = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
@@ -112,5 +120,5 @@ int	init(int argc, char **argv, t_data *data)
 		free(data->philos);
 		return (1);
 	}
-	return (check_inputs(data, argc));
+	return (0);
 }

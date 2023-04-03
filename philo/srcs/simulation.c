@@ -32,7 +32,8 @@ int	init_simulation(t_data *data)
 		data->philos[i].last_meal_time = get_time();
 		pthread_create(&data->philos[i].thread,
 			NULL, &routine, &data->philos[i]);
-		usleep(1000);
+		if (i % 2 == 0)
+			usleep(1000);
 		i++;
 	}
 	pthread_create(&th_reaper, NULL, &reaper, data);
@@ -44,9 +45,10 @@ int	init_simulation(t_data *data)
  * The end_simulation() function waits for the reaper thread
  * to finish (by using pthread_join() instead of detach), then
  * depending on the result returned by the thread prints whether
- * the simulation was successful or if a philo died.
- * Afterwards it destroys all the mutexes and detaches
- * all threads.
+ * a philo died or not, and prints if so. Afterwards it destroys 
+ * all the mutexes and joins all threads.
+ *
+ * Note: We need to use pthread_join() to avoid leaks.
  */
 
 void	end_simulation(pthread_t th_reaper, t_data *data)
