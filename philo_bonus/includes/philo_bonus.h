@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:11:59 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 14:44:08 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:02:57 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_philo {
 	int				nbr_of_meals;
 	long long		last_meal_time;
 	int				pid;
-	t_data			*data;
 }	t_philo;
 
 //	main.c

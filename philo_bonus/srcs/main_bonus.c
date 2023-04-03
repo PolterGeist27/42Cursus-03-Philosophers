@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 10:39:38 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 13:32:42 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:58:36 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 void	free_data(t_data *data)
 {
 	sem_close(data->forks);
+	sem_close(data->print);
+	sem_unlink("forks");
+	sem_unlink("print");
 	free(data->philos);
 	free(data);
 }

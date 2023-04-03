@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 14:26:08 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:03:21 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,17 @@ t_philo	*init_philos(t_data **data)
 	return (philos);
 }
 
+int init_semaphores(t_data *data)
+{
+	sem_unlink("forks");
+	sem_unlink("print");
+	data->forks = sem_open("forks", O_CREAT, 0644, data->nbr_philos);
+	data->print = sem_open("print", O_CREAT, 0644, 1);
+	if (data->forks == SEM_FAILED || data->print == SEM_FAILED)
+		return (1);
+	return (0);
+}
+
 /*
  * Initializes all the variables in "data" to the given values
  * and sends them to check_inputs() for validation.
@@ -83,10 +94,8 @@ int	init(int argc, char **argv, t_data *data)
 	else
 		data->must_eat = -1;
 	data->philos = init_philos(&data);
-	sem_unlink("forks");
-	sem_unlink("print");
-	data->forks = sem_open("forks", O_CREAT, 0644, data->nbr_philos);
-	data->print = sem_open("print", O_CREAT, 0644, 1);
+	if (init_semaphores(data))
+		return (1);
 	if (!data->philos)
 	{
 		free(data->philos);

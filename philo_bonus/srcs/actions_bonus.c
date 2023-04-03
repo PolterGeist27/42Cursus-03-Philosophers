@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 14:47:28 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:02:34 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	routine(t_data	*data)
 		print_message(data, data->index, "has taken a fork.");
 		return ;
 	}
-	while (!check_deaths(data))
+	while (1)
 	{
 		take_forks(data);
 		ft_eat(data);

@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 14:41:39 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:50:08 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	print_message(t_data *data, int index, char *msg)
 
 	sem_wait(data->print);
 	time = get_time() - data->init_time;
-	printf("%lld %d %s\n", time, index + 1, msg);
+	printf("%lld %d %s\n", time, data->philos[index].id, msg);
 	sem_post(data->print);
 }
 
