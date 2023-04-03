@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 13:16:56 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:47:28 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,12 @@
  * mutexes.
  */
 
-void	take_forks(t_philo *philo)
+void	take_forks(t_data *data)
 {
-	sem_wait(philo->data->forks);
-	if (check_deaths(philo->data))
-		return ;
-	print_message(*philo, "has taken a fork.");
-	sem_wait(philo->data->forks);
-	if (check_deaths(philo->data))
-		return ;
-	print_message(*philo, "has taken a fork.");
+	sem_wait(data->forks);
+	print_message(data, data->index, "has taken a fork.");
+	sem_wait(data->forks);
+	print_message(data, data->index, "has taken a fork.");
 }
 
 /*
@@ -37,14 +33,14 @@ void	take_forks(t_philo *philo)
  * is putting the forks down on the table again.
  */
 
-void	ft_eat(t_philo *philo)
+void	ft_eat(t_data *data)
 {
-	print_message(*philo, "is eating.");
-	philo->last_meal_time = get_time();
-	usleep(philo->data->time_to_eat * 1000);
-	sem_post(philo->data->forks);
-	sem_post(philo->data->forks);
-	philo->nbr_of_meals++;
+	print_message(data, data->index, "is eating.");
+	data->philos[data->index].last_meal_time = get_time();
+	usleep(data->time_to_eat * 1000);
+	sem_post(data->forks);
+	sem_post(data->forks);
+	data->philos[data->index].nbr_of_meals++;
 }
 
 /*
@@ -52,10 +48,10 @@ void	ft_eat(t_philo *philo)
  * which lasts for time_to_sleep milliseconds.
  */
 
-void	ft_sleep(t_philo *philo)
+void	ft_sleep(t_data *data)
 {
-	print_message(*philo, "is sleeping.");
-	usleep(philo->data->time_to_sleep * 1000);
+	print_message(data, data->index, "is sleeping.");
+	usleep(data->time_to_sleep * 1000);
 }
 
 /*
@@ -65,28 +61,20 @@ void	ft_sleep(t_philo *philo)
  * they can eat again;
  */
 
-void	routine(t_philo	*philo)
+void	routine(t_data	*data)
 {
-	if (philo->data->nbr_philos == 1)
+	if (data->nbr_philos == 1)
 	{
-		sem_wait(philo->data->forks);
-		print_message(*philo, "has taken a fork.");
+		sem_wait(data->forks);
+		print_message(data, data->index, "has taken a fork.");
 		return ;
 	}
-	while (!check_deaths(philo->data))
+	while (!check_deaths(data))
 	{
-		if (check_deaths(philo->data))
-			break ;
-		take_forks(philo);
-		if (check_deaths(philo->data))
-			break ;
-		ft_eat(philo);
-		if (check_meals(philo->data) || check_deaths(philo->data))
-			break ;
-		ft_sleep(philo);
-		if (check_deaths(philo->data))
-			break ;
-		print_message(*philo, "is thinking.");
+		take_forks(data);
+		ft_eat(data);
+		ft_sleep(data);
+		print_message(data, data->index, "is thinking.");
 	}
 }
 
@@ -117,7 +105,10 @@ void	*reaper(void *arg)
 				count++;
 			if ((current_time - data->philos[i].last_meal_time)
 				> data->time_to_die)
-				return (&data->philos[i]);
+			{
+				print_message(data, i, "has died.");
+				return ((void *)1);
+			}
 			i++;
 		}
 		if (count == data->nbr_philos)

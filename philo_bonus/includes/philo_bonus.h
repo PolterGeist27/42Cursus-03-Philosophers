@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:11:59 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 13:36:00 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:44:08 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <sys/stat.h>
 
 typedef struct s_data {
+	int 			index;
 	int				nbr_philos;
 	int				time_to_die;
 	int				time_to_eat;
@@ -53,16 +54,16 @@ void			free_data(t_data *data);
 int				ft_atoi(const char *str);
 long			ft_atol(const char *str);
 long long		get_time(void);
-void			print_message(t_philo philo, char *msg);
+void			print_message(t_data *data, int index, char *msg);
 int				check_meals(t_data *data);
 int				check_deaths(t_data *data);
 void			*reaper(void *arg);
 
 //	actions.c
-void			take_forks(t_philo *philo);
-void			ft_eat(t_philo *philo);
-void			ft_sleep(t_philo *philo);
-void			routine(t_philo	*philo);
+void			take_forks(t_data *data);
+void			ft_eat(t_data *data);
+void			ft_sleep(t_data *data);
+void			routine(t_data *data);
 
 //	init.c
 int				init(int argc, char **argv, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:23:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 12:43:35 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:41:39 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ long long	get_time(void)
  * An example of a message is "215 5 has taken a fork."
  */
 
-void	print_message(t_philo philo, char *msg)
+void	print_message(t_data *data, int index, char *msg)
 {
 	long long	time;
 
-	sem_wait(philo.data->print);
-	time = get_time() - philo.data->init_time;
-	printf("%lld %d %s\n", time, philo.id, msg);
-	sem_post(philo.data->print);
+	sem_wait(data->print);
+	time = get_time() - data->init_time;
+	printf("%lld %d %s\n", time, index + 1, msg);
+	sem_post(data->print);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 13:56:14 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:48:14 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,19 @@
 int	init_simulation(t_data *data)
 {
 	pthread_t	th_reaper;
-	int			i;
 
-	i = 0;
+	data->index = 0;
 	data->init_time = get_time();
-	while (i < data->nbr_philos)
+	while (data->index < data->nbr_philos)
 	{
-		data->philos[i].last_meal_time = get_time();
-		data->philos[i].pid = fork();
-		if (data->philos[i].pid == 0)
+		data->philos[data->index].last_meal_time = get_time();
+		data->philos[data->index].pid = fork();
+		if (data->philos[data->index].pid == 0)
 		{
-			routine(&data->philos[i]);
+			routine(data);
 			break;
 		}
-		i++;
+		data->index++;
 	}
 	pthread_create(&th_reaper, NULL, &reaper, data);
 	end_simulation(th_reaper, data);
@@ -53,14 +52,12 @@ void	end_simulation(pthread_t th_reaper, t_data *data)
 {
 	void	*result;
 	int		i;
-	
+
 	pthread_join(th_reaper, &result);
-	if (result)
-		print_message(*(t_philo *)(result), "has died.");
 	i = 0;
 	while (i < data->nbr_philos)
 	{
-		//kill(data->philos[i].pid, SIGTERM);
+		kill(data->philos[i].pid, SIGTERM);
 		i++;
 	}
 	sem_close(data->print);
