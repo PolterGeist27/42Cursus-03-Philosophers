@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   actions.c                                          :+:      :+:    :+:   */
+/*   actions_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 15:02:34 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:28:59 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,16 @@ void	take_forks(t_data *data)
 void	ft_eat(t_data *data)
 {
 	print_message(data, data->index, "is eating.");
+	sem_wait(data->philos[data->index].can_die);
 	data->philos[data->index].last_meal_time = get_time();
+	sem_post(data->philos[data->index].can_die);
 	usleep(data->time_to_eat * 1000);
 	sem_post(data->forks);
 	sem_post(data->forks);
 	data->philos[data->index].nbr_of_meals++;
+	if (data->philos[data->index].nbr_of_meals == data->must_eat
+		&& data->must_eat != -1)
+		sem_post(data->meals);
 }
 
 /*
@@ -63,6 +68,11 @@ void	ft_sleep(t_data *data)
 
 void	routine(t_data	*data)
 {
+	pthread_t	th_reaper;
+
+	if (data->index % 2)
+		usleep(1000);
+	pthread_create(&th_reaper, NULL, reaper, data);
 	if (data->nbr_philos == 1)
 	{
 		sem_wait(data->forks);
@@ -81,37 +91,25 @@ void	routine(t_data	*data)
 /*
  * The point of this function is to run on a separate
  * thread to monitor all the philosophers.
- * It checks if any philosopher has died or if they all
- * achieved the number of meals required to end the simulation.
  */
 
 void	*reaper(void *arg)
 {
 	t_data		*data;
 	long long	current_time;
-	int			count;
-	int			i;
 
 	data = (t_data *)arg;
 	while (1)
 	{
-		i = 0;
-		count = 0;
-		while (i < data->nbr_philos)
+		current_time = get_time();
+		if ((current_time - data->philos[data->index].last_meal_time) > data->time_to_die)
 		{
-			current_time = get_time();
-			if (data->must_eat != -1
-				&& data->philos[i].nbr_of_meals >= data->must_eat)
-				count++;
-			if ((current_time - data->philos[i].last_meal_time)
-				> data->time_to_die)
-			{
-				print_message(data, i, "has died.");
-				return ((void *)1);
-			}
-			i++;
+			sem_wait(data->philos[data->index].can_die);
+			print_message(data, data->index, "has died.");
+			sem_post(data->finish);
+			sem_post(data->philos[data->index].can_die);
+			exit(0);
 		}
-		if (count == data->nbr_philos)
-			return (NULL);
 	}
+	return (0);
 }

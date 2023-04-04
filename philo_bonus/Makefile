@@ -10,9 +10,12 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 
 SRC =   main \
 		utils \
+		utils2 \
 		init \
 		actions \
 		simulation \
+		monitor \
+
 
 SRCS = $(addprefix ${DIRSRC}, $(addsuffix _bonus.c, ${SRC}))
 

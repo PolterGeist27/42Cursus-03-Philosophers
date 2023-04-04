@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 15:03:21 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:27:20 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	check_inputs(char **argv, int argc)
 t_philo	*init_philos(t_data **data)
 {
 	t_philo	*philos;
+	char	*id;
 	int		i;
 
 	i = 0;
@@ -60,18 +61,27 @@ t_philo	*init_philos(t_data **data)
 		philos[i].id = i + 1;
 		philos[i].nbr_of_meals = 0;
 		philos[i].last_meal_time = get_time();
+		id = ft_itoa(philos[i].id);
+		sem_unlink(id);
+		philos[i].can_die = sem_open(id, O_CREAT, 0644, 1);
+		free(id);
 		i++;
 	}
 	return (philos);
 }
 
-int init_semaphores(t_data *data)
+int init_semaphores(t_data **data)
 {
 	sem_unlink("forks");
+	sem_unlink("meals");
 	sem_unlink("print");
-	data->forks = sem_open("forks", O_CREAT, 0644, data->nbr_philos);
-	data->print = sem_open("print", O_CREAT, 0644, 1);
-	if (data->forks == SEM_FAILED || data->print == SEM_FAILED)
+	sem_unlink("finish");
+	(*data)->forks = sem_open("forks", O_CREAT, 0644, (*data)->nbr_philos);
+	(*data)->meals = sem_open("meals", O_CREAT, 0644, 0);
+	(*data)->print = sem_open("print", O_CREAT, 0644, 1);
+	(*data)->finish = sem_open("finish", O_CREAT, 0644, 0);
+	if ((*data)->forks == SEM_FAILED || (*data)->meals == SEM_FAILED
+		|| (*data)->print == SEM_FAILED || (*data)->finish == SEM_FAILED)
 		return (1);
 	return (0);
 }
@@ -93,8 +103,9 @@ int	init(int argc, char **argv, t_data *data)
 		data->must_eat = ft_atoi(argv[5]);
 	else
 		data->must_eat = -1;
+	data->all_ate = data->nbr_philos;
 	data->philos = init_philos(&data);
-	if (init_semaphores(data))
+	if (init_semaphores(&data))
 		return (1);
 	if (!data->philos)
 	{

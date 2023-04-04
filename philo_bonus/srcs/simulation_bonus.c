@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation.c                                       :+:      :+:    :+:   */
+/*   simulation_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/03 15:02:38 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:19:18 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 
 int	init_simulation(t_data *data)
 {
-	pthread_t	th_reaper;
-
 	data->index = 0;
 	data->init_time = get_time();
 	while (data->index < data->nbr_philos)
@@ -32,33 +30,10 @@ int	init_simulation(t_data *data)
 		if (data->philos[data->index].pid == 0)
 		{
 			routine(data);
-			break;
+			break ;
 		}
 		data->index++;
 	}
-	pthread_create(&th_reaper, NULL, &reaper, data);
-	end_simulation(th_reaper, data);
+	create_monitor_threads(data);
 	return (0);
-}
-
-/*
- * The end_simulation() function waits for the reaper thread
- * to finish (by using pthread_join() instead of detach), then
- * depending on the result returned by the thread prints whether
- * a philo died.
- */
-
-void	end_simulation(pthread_t th_reaper, t_data *data)
-{
-	void	*result;
-	int		i;
-
-	pthread_join(th_reaper, &result);
-	i = 0;
-	while (i < data->nbr_philos)
-	{
-		kill(data->philos[i].pid, SIGTERM);
-		i++;
-	}
-	sem_close(data->print);
 }
