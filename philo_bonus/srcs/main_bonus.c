@@ -6,18 +6,39 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 10:39:38 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/04 12:05:37 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:49:36 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-void	free_data(t_data *data)
+void	free_semaphores(t_data *data)
 {
 	sem_close(data->forks);
 	sem_close(data->print);
+	sem_close(data->meals);
+	sem_close(data->finish);
 	sem_unlink("forks");
 	sem_unlink("print");
+	sem_unlink("meals");
+	sem_unlink("finish");
+}
+
+void	free_data(t_data *data)
+{
+	char	*id;
+	int		i;
+
+	i = 0;
+	free_semaphores(data);
+	while (i < data->nbr_philos)
+	{
+		id = ft_itoa(data->philos[i].id);
+		sem_close(data->philos[i].can_die);
+		sem_unlink(id);
+		free(id);
+		i++;
+	}
 	free(data->philos);
 	free(data);
 }

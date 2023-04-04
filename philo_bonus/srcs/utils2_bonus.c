@@ -6,13 +6,13 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:08:27 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/04 11:13:35 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:43:58 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-long		ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
 	int			i;
 	int			j;

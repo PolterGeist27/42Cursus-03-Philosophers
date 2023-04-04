@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/04 12:27:20 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:52:29 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_inputs(char **argv, int argc)
 		|| (int_max < ft_atol(argv[4])))
 		return (1);
 	if (argc == 6 && ((ft_atol(argv[5]) <= 0)
-					  || (int_max < ft_atol(argv[5]))))
+			|| (int_max < ft_atol(argv[5]))))
 		return (1);
 	return (0);
 }
@@ -70,7 +70,7 @@ t_philo	*init_philos(t_data **data)
 	return (philos);
 }
 
-int init_semaphores(t_data **data)
+int	init_semaphores(t_data **data)
 {
 	sem_unlink("forks");
 	sem_unlink("meals");
@@ -106,7 +106,10 @@ int	init(int argc, char **argv, t_data *data)
 	data->all_ate = data->nbr_philos;
 	data->philos = init_philos(&data);
 	if (init_semaphores(&data))
+	{
+		free_semaphores(data);
 		return (1);
+	}
 	if (!data->philos)
 	{
 		free(data->philos);

@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/04 12:28:59 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:44:15 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ void	*reaper(void *arg)
 	while (1)
 	{
 		current_time = get_time();
-		if ((current_time - data->philos[data->index].last_meal_time) > data->time_to_die)
+		if ((current_time - data->philos[data->index].last_meal_time)
+			> data->time_to_die)
 		{
 			sem_wait(data->philos[data->index].can_die);
 			print_message(data, data->index, "has died.");
