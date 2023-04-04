@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 	free_data(data);
 }
 
-long		ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
 	int			i;
 	int			j;
@@ -62,4 +62,3 @@ long		ft_atol(const char *str)
 		final *= -1;
 	return (final);
 }
-

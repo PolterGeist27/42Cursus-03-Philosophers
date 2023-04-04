@@ -35,7 +35,7 @@ int	check_inputs(char **argv, int argc)
 		|| (int_max < ft_atol(argv[4])))
 		return (1);
 	if (argc == 6 && ((ft_atol(argv[5]) <= 0)
-		|| (int_max < ft_atol(argv[5]))))
+			|| (int_max < ft_atol(argv[5]))))
 		return (1);
 	return (0);
 }
