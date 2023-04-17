@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/04 12:44:15 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/17 11:20:02 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	ft_eat(t_data *data)
 	print_message(data, data->index, "is eating.");
 	sem_wait(data->philos[data->index].can_die);
 	data->philos[data->index].last_meal_time = get_time();
-	sem_post(data->philos[data->index].can_die);
 	usleep(data->time_to_eat * 1000);
+	sem_post(data->philos[data->index].can_die);
 	sem_post(data->forks);
 	sem_post(data->forks);
 	data->philos[data->index].nbr_of_meals++;

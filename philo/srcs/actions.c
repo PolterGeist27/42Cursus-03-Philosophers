@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/28 12:36:14 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/17 11:37:56 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ void	take_forks(t_philo *philo)
 
 void	ft_eat(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->can_die);
 	print_message(*philo, "is eating.");
 	philo->last_meal_time = get_time();
 	usleep(philo->data->time_to_eat * 1000);
+	pthread_mutex_unlock(&philo->can_die);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 	philo->nbr_of_meals++;
@@ -121,7 +123,8 @@ void	*reaper(void *arg)
 				count++;
 			if ((current_time - data->philos[i].last_meal_time)
 				> data->time_to_die)
-				return (&data->philos[i]);
+				return (pthread_mutex_lock(&data->philos[i].can_die),
+					&data->philos[i]);
 			i++;
 		}
 		if (count == data->nbr_philos)

@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/03/28 14:40:23 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/17 11:37:49 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_philo	*init_philos(t_data **data)
 		philos[i].last_meal_time = get_time();
 		philos[i].right_fork = &(*data)->forks[(i + 1) % (*data)->nbr_philos];
 		philos[i].left_fork = &(*data)->forks[i];
+		pthread_mutex_init(&philos[i].can_die, NULL);
 		philos[i].data = *data;
 		i++;
 	}
