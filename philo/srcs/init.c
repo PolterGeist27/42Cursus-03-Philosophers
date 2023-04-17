@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/17 11:37:49 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:01:29 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	init(int argc, char **argv, t_data *data)
 		data->must_eat = ft_atoi(argv[5]);
 	else
 		data->must_eat = -1;
+	data->can_finish = 0;
 	data->forks = init_forks(data->nbr_philos);
 	data->philos = init_philos(&data);
 	if (!data->forks)

@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/04 12:19:18 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:56:13 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * THe init_simulation() function starts the print semaphore (so that
  * only 1 process can write at a time) and then starts all the
  * processes for the philosophers. After that it creates a thread for
- * the reaper and calls the end_simulation() function.
+ * the reaper.
  */
 
 int	init_simulation(t_data *data)

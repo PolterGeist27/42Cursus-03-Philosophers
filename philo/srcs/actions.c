@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 10:16:09 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/17 11:37:56 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:03:37 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,18 @@ void	*routine(void *arg)
 		print_message(*philo, "has taken a fork.");
 		return ((void *)philo);
 	}
-	while (!check_deaths(philo->data))
+	while (!philo->data->can_finish)
 	{
-		if (check_deaths(philo->data))
+		if (philo->data->can_finish)
 			break ;
 		take_forks(philo);
-		if (check_deaths(philo->data))
+		if (philo->data->can_finish)
 			break ;
 		ft_eat(philo);
-		if (check_meals(philo->data) || check_deaths(philo->data))
+		if (philo->data->can_finish)
 			break ;
 		ft_sleep(philo);
-		if (check_deaths(philo->data))
+		if (philo->data->can_finish)
 			break ;
 		print_message(*philo, "is thinking.");
 	}
@@ -124,10 +124,10 @@ void	*reaper(void *arg)
 			if ((current_time - data->philos[i].last_meal_time)
 				> data->time_to_die)
 				return (pthread_mutex_lock(&data->philos[i].can_die),
-					&data->philos[i]);
+					data->can_finish = 1, &data->philos[i]);
 			i++;
 		}
 		if (count == data->nbr_philos)
-			return (NULL);
+			return (data->can_finish = 1, NULL);
 	}
 }

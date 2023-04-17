@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:11:59 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/17 11:22:43 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:01:02 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_data {
 	int				time_to_sleep;
 	int				must_eat;
 	long long		init_time;
+	int				can_finish;
 	struct s_philo	*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
