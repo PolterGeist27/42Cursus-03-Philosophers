@@ -20,8 +20,10 @@
 
 void	take_forks(t_data *data)
 {
+	usleep(100);
 	sem_wait(data->forks);
 	print_message(data, data->index, "has taken a fork.");
+	usleep(100);
 	sem_wait(data->forks);
 	print_message(data, data->index, "has taken a fork.");
 }
