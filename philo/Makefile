@@ -6,10 +6,11 @@ DIRSRC = ./srcs/
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread
 
 SRC =   main \
 		utils \
+		utils2 \
 		init \
 		actions \
 		simulation \

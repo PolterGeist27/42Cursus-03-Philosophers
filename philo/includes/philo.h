@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 11:11:59 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/17 15:01:02 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:02:01 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_data {
 	struct s_philo	*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
+	pthread_mutex_t	check_finish;
 }	t_data;
 
 typedef struct s_philo {
@@ -71,5 +72,10 @@ t_philo			*init_philos(t_data **data);
 //	simulation.c
 int				init_simulation(t_data *data);
 void			end_simulation(pthread_t th_reaper, t_data *data);
+
+//	utils2.c
+t_philo			*reaper_loop(t_data *data, int *count);
+void			take_forks_reverse(t_philo *philo);
+int				check_finish(t_data *data);
 
 #endif

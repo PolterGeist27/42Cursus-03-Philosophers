@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:48:14 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/17 11:37:39 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:18:52 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,13 @@ void	end_simulation(pthread_t th_reaper, t_data *data)
 	while (i < data->nbr_philos)
 	{
 		pthread_join(data->philos[i].thread, NULL);
+		i++;
+	}
+	i = 0;
+	while (i++ < data->nbr_philos)
+	{
 		pthread_mutex_destroy(&data->philos[i].can_die);
 		pthread_mutex_destroy(&data->forks[i]);
-		i++;
 	}
 	pthread_mutex_destroy(&data->print);
 }

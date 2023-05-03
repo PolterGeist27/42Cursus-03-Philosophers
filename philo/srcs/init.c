@@ -6,7 +6,7 @@
 /*   By: diogmart <diogmart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:25:11 by diogmart          #+#    #+#             */
-/*   Updated: 2023/04/17 15:01:29 by diogmart         ###   ########.fr       */
+/*   Updated: 2023/05/03 11:00:07 by diogmart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int	init(int argc, char **argv, t_data *data)
 	data->can_finish = 0;
 	data->forks = init_forks(data->nbr_philos);
 	data->philos = init_philos(&data);
+	pthread_mutex_init(&data->check_finish, NULL);
 	if (!data->forks)
 	{
 		free(data->forks);
